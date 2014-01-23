@@ -19,6 +19,15 @@ a {
 	position: relative;
 	z-index: 5;
 }
+#footer {
+	color: #222;
+	font-size: 14px;
+	opacity: 0.4;
+	text-align: center;
+}
+#footer a {
+	color: #134481;
+}
 #sitepicker {
 	font-size: 16px;
 	padding: 4px;

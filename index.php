@@ -87,4 +87,5 @@
 			</tr>
 		</table>
 	</body>
+	<div id='footer'><i>Stacker</i> created by <a href='http://stackoverflow.com/users/1438733/eric'>Eric</a>. The project is open-source and available <a href='https://github.com/ekumlin/Stacker'>on GitHub</a>!</div>
 </html>
