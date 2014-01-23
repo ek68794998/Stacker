@@ -1,7 +1,7 @@
 Stacker
 =======
 
-Collects and displays user and content data from Stack Exchange sites.
+Collects and displays user and content data from Stack Exchange sites. The project can be seen live [**here**](http://codemanteau.com/stacker/).
 
 ##Data collection
 
