@@ -1,0 +1,54 @@
+body {
+	background: #fff;
+	font: 17px WfRoboto, Roboto;
+	margin: 0;
+	overflow-x: hidden;
+	padding: 0;
+}
+textarea {
+	font-size: inherit;
+}
+a {
+	color: #527391;
+}
+#header {
+	background: #f3f3f3;
+	box-shadow: 0 0 18px rgba(0,0,0,0.4);
+	margin: 0 auto 26px;
+	padding: 20px;
+	position: relative;
+	z-index: 5;
+}
+#sitepicker {
+	font-size: 16px;
+	padding: 4px;
+}
+#data {
+	left: -9999px;
+	height: 0;
+	overflow: hidden;
+	position: absolute;
+	visibility: hidden;
+	width: 0;
+}
+#dataoutput {
+	height: 500px;
+	margin-top: 10px;
+	width: 100%;
+}
+.dashbox.controlbox {
+	height: 100px;
+}
+.dashbox.infobox {
+	padding: 0 20px;
+}
+.dashbox.infobox span {
+	font-size: 22px;
+}
+.dashbox.infobox .title {
+	font-weight: 100;
+}
+.dashbox.infobox .value {
+	font-weight: 500;
+	margin-left: 8px;
+}
