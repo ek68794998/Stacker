@@ -30,13 +30,29 @@ google.setOnLoadCallback(function() {
 			'Total Users',
 			'Avid Users'
 		];
+		var decimals = [
+			1,
+			3,
+			0,
+			3,
+			0,
+			0
+		];
+		var valueFormatters = [
+			new google.visualization.NumberFormat({ fractionDigits: decimals[0] }),
+			new google.visualization.NumberFormat({ fractionDigits: decimals[1] }),
+			new google.visualization.NumberFormat({ fractionDigits: decimals[2] }),
+			new google.visualization.NumberFormat({ fractionDigits: decimals[3] }),
+			new google.visualization.NumberFormat({ fractionDigits: decimals[4] }),
+			new google.visualization.NumberFormat({ fractionDigits: decimals[5] })
+		];
 		var fieldFormats = [
-			function (num) { return addCommas(num.toFixed(1)); },
-			function (num) { return num.toFixed(2) + '%'; },
-			function (num) { return addCommas(num.toFixed(0)); },
-			function (num) { return num.toFixed(2); },
-			function (num) { return addCommas(num.toFixed(0)); },
-			function (num) { return addCommas(num.toFixed(0)); }
+			function (num) { return valueFormatters[0].formatValue(num); },
+			function (num) { return valueFormatters[1].formatValue(num) + '%'; },
+			function (num) { return valueFormatters[2].formatValue(num); },
+			function (num) { return valueFormatters[3].formatValue(num); },
+			function (num) { return valueFormatters[4].formatValue(num); },
+			function (num) { return valueFormatters[5].formatValue(num); }
 		];
 		var months = [
 			"Jan",
@@ -60,7 +76,7 @@ google.setOnLoadCallback(function() {
 		var firstRow = rows[0].split(" ");
 		var arrs = [];
 		var okays = [5, 80, 500, 1.0, null, 75];
-		var excels = [15, 90, 1500, 2.5, null, 150];
+		var excels = [10, 90, 1500, 2.5, null, 150];
 
 		for (var i = 1; i < firstRow.length; i++) {
 			var arr = [[fields[0], fields[i]]];
@@ -88,7 +104,7 @@ google.setOnLoadCallback(function() {
 			arrs[arrs.length] = arr;
 		}
 
-		var formatter = new google.visualization.DateFormat({
+		var dateFormatter = new google.visualization.DateFormat({
 			pattern: 'MMM d, yyyy'
 		});
 
@@ -96,6 +112,12 @@ google.setOnLoadCallback(function() {
 		var ratingColors = ['#900', '#f80', '#070'];
 		var range = {'start': new Date(new Date().getTime() - 14*24*60*60*1000), 'end': new Date()};
 		for (var i = 0; i < arrs.length; i++) {
+			for (var j = arrs[i].length - 1; j >= 0; j--) {
+				if (arrs[i][j][3] == 0) {
+					arrs[i].splice(j, 1);
+				}
+			}
+
 			var dataTable = google.visualization.arrayToDataTable(arrs[i]);
 
 			var titleIndex = 1;
@@ -154,7 +176,11 @@ google.setOnLoadCallback(function() {
 				'options': chartOptions
 			});
 
-			formatter.format(dataTable, 0);
+			dateFormatter.format(dataTable, 0);
+			var max = arrs[i][0].length < 4 ? 1 : 3;
+			for (var j = 1; j <= max; j++) {
+				valueFormatters[i].format(dataTable, j);
+			}
 			new google.visualization.Dashboard($("#dataoutput td:eq(" + i + ")").html(htmlContents)[0])
 				.bind(control, chart)
 				.draw(dataTable);

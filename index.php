@@ -30,7 +30,8 @@
 		<div id='data'><?php
 			$siteid = ctype_digit(@$_GET['siteId']) ? intval($_GET['siteId']) : 1;
 			$mysqli = new mysqli($_CONFIG['db_host'], $_CONFIG['db_user'], $_CONFIG['db_password'], $_CONFIG['db_name']);
-			$query = "SELECT * FROM stack_data WHERE SiteID={$siteid} ORDER BY DateRecorded ASC";
+			$query = "SELECT * FROM stack_data LEFT JOIN stack_sites ON SiteID=StackSiteID WHERE SiteID={$siteid} ORDER BY DateRecorded ASC";
+			$site = array();
 
 			if ($result = $mysqli->query($query)) {
 				while ($row = $result->fetch_assoc()) {
@@ -48,6 +49,10 @@
 					echo " ";
 					echo $row['AvidUserCount'];
 					echo "\n";
+
+					if (count($site) == 0) {
+						$site['url'] = "http://{$row['Domain']}";
+					}
 				}
 
 				$result->free();
@@ -72,6 +77,8 @@
 						$result->free();
 					}
 				?></select>
+				<br />
+				<a href='<?php echo $site['url']; ?>' class='visitheader'>Visit the site!</a>
 			</div>
 		</div>
 		<table id='dataoutput' cellspacing=1 cellpadding=0>
